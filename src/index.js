@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.css'
 
 function Square(props) {
   return (
@@ -24,9 +24,8 @@ function calculateWinner(squares) {
 
   for (let i = 0; i < lines.length; i++) {
     const [a,b,c] = lines[i];
-    console.log( [a,b,c] );
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[i]
+      return squares[a]
     }
   }
   return null;
@@ -43,6 +42,10 @@ class Board extends React.Component {
 
   handleClick(i) {
     const squares = this.state.squares.slice();
+
+    if (calculateWinner(squares) || squares[i]){
+      return;
+    }
     squares[i] = this.state.xIsNext ? 'X' : 'O';
     this.setState({
       squares: squares,
@@ -60,7 +63,6 @@ class Board extends React.Component {
   }
 
   render() {
-
     const winner = calculateWinner(this.state.squares);
     let status;
     if (winner) {
@@ -108,7 +110,6 @@ class Game extends React.Component {
   }
 }
 
-// ========================================
 
 ReactDOM.render(
   <Game />,
